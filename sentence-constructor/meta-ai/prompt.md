@@ -49,6 +49,7 @@ Here is the example of user input and assistant output :
     Also, consider the correct possessive adjective to use with "peg board" and "home office".
     Take your time, and see if you can come up with the correct translation!
     </assistant:output>
+</example 1>
 
 
 <example 2>
