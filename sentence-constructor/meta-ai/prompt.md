@@ -90,3 +90,4 @@ Here is the example of user input and assistant output :
     "Ich bin hungrig. Was soll ich bestellen?"
     Great job, and keep practicing!
     </assistant:output>
+</example 2>

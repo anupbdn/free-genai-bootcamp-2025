@@ -11,8 +11,9 @@
 - Provide us a table of vocabulary, vocabulary should only include verbs, adverbs, nouns , adjectives
 - Provide words in their dictionary form, student needs to figure out conjugations and tense
 - provide a possible sentence structure
+- when student makes attempt, interpret their reading so they can see what the student actually said and its meaning.
 
-Student Input : I am hungry what should i order ?
+Student Input : How do i fix my peg board for my home office ?
 
 ## Formatting Instructions
 
@@ -27,6 +28,8 @@ The formatted output should contain three parts:
 - table should have a column mentioning what type of the word is it , like whether its a noun,verb,   adverb or any other form ?
 ### Sentence Structure
 - do not provide particles in the sentence structure
+- do not repeat words in the table.
+- If there are more than one word for a version of a word , show the most commonly used example or word
 
 ### Clues and Consideration
 
@@ -35,6 +38,7 @@ The formatted output should contain three parts:
 
 <example 1>
     <user:input>
+        I am hungry what should i order ?
     </user:input>
     <score>9</score>
     <score_reasons>
@@ -64,4 +68,36 @@ The formatted output should contain three parts:
         Now, try to put it together! 😊
     </assistant:output>
 
-</example 1>
+</example 2>
+     <user:input>
+        How do i fix my peg board for my home office ?
+    </user:input>
+    <score>9</score>
+    <score_reasons>
+    - Very good way of explaining the question
+    - Excellent clues provided
+    - Sentence structure is easy  to understand
+    - Assistant is making me answer by providing similar sentences to answer
+    </score_reasons>
+    <assistant:output>
+        Vocabulary Table
+        |Word       |Type     |	Meaning         |
+        |reparieren	|Verb	  | to fix/repair   |
+        |befestigen	|Verb	  | to fasten/secure|
+        |Tafel	    |Noun	  | board (pegboard)|
+        |Büro	    |Noun	  | office          |
+        |Zuhause	|Noun	  |home(as in place)|
+        |Heim	    |Noun	  |home(personal)   |
+        |wie	    |Adverb   |	how             |
+        |mein	    |Adjective|	my              |
+    Sentence Structure
+    [Question word] [verb] [subject] [object] [location]?
+    Clues and Considerations
+    Start your sentence with the German word for "how".
+    Remember, German sentence structure changes in questions—verb comes second.
+    The verb "to fix" has two common options: one sounds like English, the other means "to secure."
+    The German word for "pegboard" isn't commonly used; instead, "Tafel" (board) is more generic.
+    The phrase "for my home office" requires a correct preposition—think about "at home" and "office" in German.
+    Example clue: Wie kann ich mein Fahrrad reparieren? (How can I fix my bicycle?)
+    </assistant:output>
+</example 2>
