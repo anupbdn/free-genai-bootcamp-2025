@@ -26,63 +26,63 @@ backend-FastApi/
 ├── uv.lock                 # UV lock file
 ├── words.db               # SQLite database
 │
-├── app/
+├── src/                   # Source code directory
 │   ├── __init__.py
-│   ├── main.py            # FastAPI application entry point
+│   ├── main.py           # FastAPI application entry point
 │   │
-│   ├── api/               # API route handlers
+│   ├── api/              # API route handlers
 │   │   ├── __init__.py
-│   │   ├── dashboard.py   # Dashboard endpoints
-│   │   ├── words.py       # Word-related endpoints
-│   │   ├── groups.py      # Group-related endpoints
+│   │   ├── dashboard.py
+│   │   ├── words.py
+│   │   ├── groups.py
 │   │   ├── study_sessions.py
 │   │   └── study_activities.py
 │   │
-│   ├── models/            # SQLAlchemy models
+│   ├── models/           # SQLAlchemy models
 │   │   ├── __init__.py
 │   │   ├── word.py
 │   │   ├── group.py
 │   │   ├── study_session.py
 │   │   └── word_review.py
 │   │
-│   ├── schemas/           # Pydantic models for request/response
+│   ├── schemas/          # Pydantic models
 │   │   ├── __init__.py
 │   │   ├── word.py
 │   │   ├── group.py
 │   │   ├── study_session.py
 │   │   └── dashboard.py
 │   │
-│   ├── core/              # Core application code
+│   ├── core/             # Core application code
 │   │   ├── __init__.py
-│   │   ├── config.py      # Configuration settings
-│   │   ├── database.py    # Database connection
-│   │   └── exceptions.py  # Custom exceptions
+│   │   ├── config.py     # Configuration settings
+│   │   ├── database.py   # Database connection
+│   │   └── exceptions.py # Custom exceptions
 │   │
-│   ├── services/          # Business logic
+│   ├── services/         # Business logic
 │   │   ├── __init__.py
 │   │   ├── word_service.py
 │   │   ├── group_service.py
 │   │   └── study_service.py
 │   │
-│   └── utils/             # Utility functions
+│   └── utils/            # Utility functions
 │       ├── __init__.py
 │       └── helpers.py
 │
-├── migrations/            # Database migrations
+├── migrations/           # Database migrations
 │   ├── 0001_init.sql
 │   └── 0002_create_words_table.sql
 │
-├── seeds/                 # Seed data files
+├── seeds/                # Seed data files
 │   ├── basic_greetings.json
 │   └── numbers.json
 │
-├── scripts/              # Task runner scripts
+├── scripts/             # Task runner scripts
 │   ├── __init__.py
 │   ├── init_db.py
 │   ├── run_migrations.py
 │   └── seed_data.py
 │
-└── tests/                # Test files
+└── tests/               # Test files
     ├── __init__.py
     ├── conftest.py
     ├── test_api/
