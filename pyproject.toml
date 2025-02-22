@@ -1,0 +1,12 @@
+[project]
+name = "language-learning-api"
+version = "0.2.0"
+description = "Backend API for a language learning portal"
+requires-python = ">=3.13.1"  # This is the correct way to specify Python version
+dependencies = [
+    "fastapi>=0.112.0",
+    "uvicorn>=0.30.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+    "pyjwt>=2.8.0"
+]
