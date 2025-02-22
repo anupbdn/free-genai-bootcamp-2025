@@ -14,11 +14,84 @@ A language learning school wants to build a prototype of learning portal which w
 - The API will be built using FastApi
 - Complete Package Management of python will be done using `uv`
 - The API will always return JSON
-- There will no authentication or authorization
+- There will be no need for authentication or authorization
 - Everything be treated as a single user
 
 ## Directory Structure
 
+```text
+backend-FastApi/
+├── README.md
+├── pyproject.toml          # Project dependencies and metadata
+├── uv.lock                 # UV lock file
+├── words.db               # SQLite database
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py            # FastAPI application entry point
+│   │
+│   ├── api/               # API route handlers
+│   │   ├── __init__.py
+│   │   ├── dashboard.py   # Dashboard endpoints
+│   │   ├── words.py       # Word-related endpoints
+│   │   ├── groups.py      # Group-related endpoints
+│   │   ├── study_sessions.py
+│   │   └── study_activities.py
+│   │
+│   ├── models/            # SQLAlchemy models
+│   │   ├── __init__.py
+│   │   ├── word.py
+│   │   ├── group.py
+│   │   ├── study_session.py
+│   │   └── word_review.py
+│   │
+│   ├── schemas/           # Pydantic models for request/response
+│   │   ├── __init__.py
+│   │   ├── word.py
+│   │   ├── group.py
+│   │   ├── study_session.py
+│   │   └── dashboard.py
+│   │
+│   ├── core/              # Core application code
+│   │   ├── __init__.py
+│   │   ├── config.py      # Configuration settings
+│   │   ├── database.py    # Database connection
+│   │   └── exceptions.py  # Custom exceptions
+│   │
+│   ├── services/          # Business logic
+│   │   ├── __init__.py
+│   │   ├── word_service.py
+│   │   ├── group_service.py
+│   │   └── study_service.py
+│   │
+│   └── utils/             # Utility functions
+│       ├── __init__.py
+│       └── helpers.py
+│
+├── migrations/            # Database migrations
+│   ├── 0001_init.sql
+│   └── 0002_create_words_table.sql
+│
+├── seeds/                 # Seed data files
+│   ├── basic_greetings.json
+│   └── numbers.json
+│
+├── scripts/              # Task runner scripts
+│   ├── __init__.py
+│   ├── init_db.py
+│   ├── run_migrations.py
+│   └── seed_data.py
+│
+└── tests/                # Test files
+    ├── __init__.py
+    ├── conftest.py
+    ├── test_api/
+    │   ├── test_words.py
+    │   └── test_groups.py
+    └── test_services/
+        ├── test_word_service.py
+        └── test_group_service.py
+```
 
 
 ## Database Schema
