@@ -1,0 +1,47 @@
+[
+  {
+    "japanese": "一",
+    "romaji": "ichi",
+    "english": "one",
+    "parts": {
+      "kanji": "一",
+      "hiragana": ["い", "ち"]
+    }
+  },
+  {
+    "japanese": "二",
+    "romaji": "ni",
+    "english": "two",
+    "parts": {
+      "kanji": "二",
+      "hiragana": ["に"]
+    }
+  },
+  {
+    "japanese": "三",
+    "romaji": "san",
+    "english": "three",
+    "parts": {
+      "kanji": "三",
+      "hiragana": ["さ", "ん"]
+    }
+  },
+  {
+    "japanese": "四",
+    "romaji": "yon",
+    "english": "four",
+    "parts": {
+      "kanji": "四",
+      "hiragana": ["よ", "ん"]
+    }
+  },
+  {
+    "japanese": "五",
+    "romaji": "go",
+    "english": "five",
+    "parts": {
+      "kanji": "五",
+      "hiragana": ["ご"]
+    }
+  }
+] 

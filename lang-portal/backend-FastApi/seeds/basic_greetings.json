@@ -1,0 +1,42 @@
+[
+  {
+    "japanese": "こんにちは",
+    "romaji": "konnichiwa",
+    "english": "hello",
+    "parts": {
+      "hiragana": ["こ", "ん", "に", "ち", "は"]
+    }
+  },
+  {
+    "japanese": "さようなら",
+    "romaji": "sayounara",
+    "english": "goodbye",
+    "parts": {
+      "hiragana": ["さ", "よ", "う", "な", "ら"]
+    }
+  },
+  {
+    "japanese": "おはようございます",
+    "romaji": "ohayou gozaimasu",
+    "english": "good morning",
+    "parts": {
+      "hiragana": ["お", "は", "よ", "う", "ご", "ざ", "い", "ま", "す"]
+    }
+  },
+  {
+    "japanese": "こんばんは",
+    "romaji": "konbanwa",
+    "english": "good evening",
+    "parts": {
+      "hiragana": ["こ", "ん", "ば", "ん", "は"]
+    }
+  },
+  {
+    "japanese": "ありがとう",
+    "romaji": "arigatou",
+    "english": "thank you",
+    "parts": {
+      "hiragana": ["あ", "り", "が", "と", "う"]
+    }
+  }
+] 

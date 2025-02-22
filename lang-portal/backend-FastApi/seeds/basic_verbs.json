@@ -1,0 +1,38 @@
+[
+  {
+    "japanese": "食べる",
+    "romaji": "taberu",
+    "english": "to eat",
+    "parts": {
+      "kanji": "食",
+      "hiragana": ["た", "べ", "る"]
+    }
+  },
+  {
+    "japanese": "飲む",
+    "romaji": "nomu",
+    "english": "to drink",
+    "parts": {
+      "kanji": "飲",
+      "hiragana": ["の", "む"]
+    }
+  },
+  {
+    "japanese": "見る",
+    "romaji": "miru",
+    "english": "to see",
+    "parts": {
+      "kanji": "見",
+      "hiragana": ["み", "る"]
+    }
+  },
+  {
+    "japanese": "行く",
+    "romaji": "iku",
+    "english": "to go",
+    "parts": {
+      "kanji": "行",
+      "hiragana": ["い", "く"]
+    }
+  }
+] 

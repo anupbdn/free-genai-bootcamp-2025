@@ -1,0 +1,38 @@
+[
+  {
+    "japanese": "赤",
+    "romaji": "aka",
+    "english": "red",
+    "parts": {
+      "kanji": "赤",
+      "hiragana": ["あ", "か"]
+    }
+  },
+  {
+    "japanese": "青",
+    "romaji": "ao",
+    "english": "blue",
+    "parts": {
+      "kanji": "青",
+      "hiragana": ["あ", "お"]
+    }
+  },
+  {
+    "japanese": "黄色",
+    "romaji": "kiiro",
+    "english": "yellow",
+    "parts": {
+      "kanji": ["黄", "色"],
+      "hiragana": ["き", "い", "ろ"]
+    }
+  },
+  {
+    "japanese": "緑",
+    "romaji": "midori",
+    "english": "green",
+    "parts": {
+      "kanji": "緑",
+      "hiragana": ["み", "ど", "り"]
+    }
+  }
+] 

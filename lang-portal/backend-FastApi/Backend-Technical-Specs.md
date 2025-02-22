@@ -652,3 +652,20 @@ In our task we should have DSL to specific each seed file and its expected group
   ...
 ]
 ```
+
+### Use pytest for Unit testing
+
+This task will create test cases which will run and give you a PASS or FAILURE message. This comprehensive test cases will ensure that the API endpoint and services are working as expected.
+
+```text
+tests/test_api/test_dashboard.py::test_get_dashboard_stats PASSED                                                     [ 11%]
+tests/test_api/test_dashboard.py::test_get_study_progress PASSED                                                      [ 22%]
+tests/test_api/test_groups.py::test_create_group PASSED                                                               [ 33%]
+tests/test_api/test_groups.py::test_get_groups PASSED                                                                 [ 44%]
+tests/test_api/test_groups.py::test_get_group_words PASSED                                                            [ 55%]
+tests/test_api/test_words.py::test_read_words PASSED                                                                  [ 66%]
+tests/test_api/test_words.py::test_create_word PASSED                                                                 [ 77%]
+tests/test_api/test_words.py::test_get_words PASSED                                                                   [ 88%]
+tests/test_api/test_words.py::test_get_word PASSED   
+
+```

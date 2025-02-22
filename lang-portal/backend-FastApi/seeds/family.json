@@ -1,0 +1,38 @@
+[
+  {
+    "japanese": "母",
+    "romaji": "haha",
+    "english": "mother",
+    "parts": {
+      "kanji": "母",
+      "hiragana": ["は", "は"]
+    }
+  },
+  {
+    "japanese": "父",
+    "romaji": "chichi",
+    "english": "father",
+    "parts": {
+      "kanji": "父",
+      "hiragana": ["ち", "ち"]
+    }
+  },
+  {
+    "japanese": "姉",
+    "romaji": "ane",
+    "english": "older sister",
+    "parts": {
+      "kanji": "姉",
+      "hiragana": ["あ", "ね"]
+    }
+  },
+  {
+    "japanese": "弟",
+    "romaji": "otouto",
+    "english": "younger brother",
+    "parts": {
+      "kanji": "弟",
+      "hiragana": ["お", "と", "う", "と"]
+    }
+  }
+] 
