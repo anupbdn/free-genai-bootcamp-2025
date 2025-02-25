@@ -5,6 +5,7 @@ from ..core.database import get_db
 from ..services.group_service import GroupService
 from ..schemas.group import Group, GroupCreate, GroupDetail
 from ..schemas.word import Word
+from ..schemas.study_session import StudySession
 
 router = APIRouter()
 
@@ -37,4 +38,18 @@ async def get_group_words(
 
 @router.post("/groups", response_model=Group)
 async def create_group(group: GroupCreate, db: Session = Depends(get_db)):
-    return await GroupService.create_group(db, group) 
+    return await GroupService.create_group(db, group)
+
+@router.get("/groups/{group_id}/study_sessions", response_model=List[StudySession])
+async def get_group_study_sessions(
+    group_id: int,
+    db: Session = Depends(get_db)
+):
+    """Get all study sessions for a specific group"""
+    try:
+        sessions = await GroupService.get_group_study_sessions(db, group_id)
+        if sessions is None:
+            raise HTTPException(status_code=404, detail="Group not found")
+        return sessions
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) 

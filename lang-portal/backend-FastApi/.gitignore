@@ -71,4 +71,34 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
-*.pem 
+*.pem
+
+# Backend specific gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.env.*
+data/
+logs/
+dist/
+build/
+*.egg-info/
+.eggs/
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db 

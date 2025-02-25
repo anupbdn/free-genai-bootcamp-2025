@@ -1,0 +1,56 @@
+# Root level gitignore
+.DS_Store
+.env
+.venv
+*.pyc
+__pycache__/
+.idea/
+.vscode/
+*.log
+
+# Frontend ignores
+frontend-react/node_modules/
+frontend-react/dist/
+frontend-react/build/
+frontend-react/.env
+frontend-react/.env.local
+frontend-react/.env.development
+frontend-react/.env.production
+frontend-react/coverage/
+frontend-react/npm-debug.log*
+frontend-react/yarn-debug.log*
+frontend-react/yarn-error.log*
+frontend-react/.pnpm-debug.log*
+
+# Backend ignores
+backend-FastApi/__pycache__/
+backend-FastApi/*.py[cod]
+backend-FastApi/*$py.class
+backend-FastApi/venv/
+backend-FastApi/.env
+backend-FastApi/.env.*
+backend-FastApi/data/
+backend-FastApi/logs/
+backend-FastApi/dist/
+backend-FastApi/build/
+backend-FastApi/*.egg-info/
+backend-FastApi/.eggs/
+backend-FastApi/htmlcov/
+backend-FastApi/.coverage
+backend-FastApi/.pytest_cache/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating System
+.DS_Store
+Thumbs.db 

@@ -24,6 +24,14 @@ app.include_router(groups.router, prefix=settings.API_V1_STR)
 app.include_router(study_sessions.router, prefix=settings.API_V1_STR)
 app.include_router(study_activities.router, prefix=settings.API_V1_STR)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"} 

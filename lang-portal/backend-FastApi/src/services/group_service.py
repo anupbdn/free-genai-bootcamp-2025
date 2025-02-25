@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..models.group import Group
 from ..schemas.group import GroupCreate, GroupUpdate
+from ..models.study_session import StudySession
 
 class GroupService:
     @staticmethod
@@ -25,4 +26,19 @@ class GroupService:
         group = await GroupService.get_group(db, group_id)
         if group:
             return group.words[skip:skip + limit]
-        return [] 
+        return []
+
+    @staticmethod
+    async def get_group_study_sessions(db: Session, group_id: int):
+        """Get all study sessions for a specific group"""
+        group = db.query(Group).filter(Group.id == group_id).first()
+        if not group:
+            return None
+            
+        sessions = (
+            db.query(StudySession)
+            .filter(StudySession.group_id == group_id)
+            .order_by(StudySession.created_at.desc())
+            .all()
+        )
+        return sessions 
