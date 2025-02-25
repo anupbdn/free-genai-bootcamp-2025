@@ -103,7 +103,3 @@ frontend-react/
 2. Make changes
 3. Run tests and lint checks
 4. Submit pull request
-
-## License
-
-[Your License Here]
