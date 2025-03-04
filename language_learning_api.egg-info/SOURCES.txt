@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+language_learning_api.egg-info/PKG-INFO
+language_learning_api.egg-info/SOURCES.txt
+language_learning_api.egg-info/dependency_links.txt
+language_learning_api.egg-info/requires.txt
+language_learning_api.egg-info/top_level.txt

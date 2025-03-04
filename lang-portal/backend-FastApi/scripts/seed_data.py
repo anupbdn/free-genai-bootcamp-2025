@@ -16,7 +16,8 @@ def seed_data():
             "numbers": Group(name="Numbers"),
             "colors": Group(name="Colors"),
             "family": Group(name="Family Members"),
-            "basic_verbs": Group(name="Basic Verbs")
+            "basic_verbs": Group(name="Basic Verbs"),
+            "foods": Group(name="Foods")
         }
         
         for group in groups.values():
@@ -30,7 +31,13 @@ def seed_data():
             if group_name in groups:
                 with open(seed_file) as f:
                     words_data = json.load(f)
-                    for word_data in words_data:
+                    # Handle both list and dictionary formats
+                    if isinstance(words_data, dict) and "vocabulary" in words_data:
+                        words_list = words_data["vocabulary"]
+                    else:
+                        words_list = words_data
+                        
+                    for word_data in words_list:
                         word = Word(**word_data)
                         word.groups.append(groups[group_name])
                         db.add(word)

@@ -1,0 +1,60 @@
+{
+  "vocabulary": [
+    {
+      "japanese": "食べ物",
+      "romaji": "tabemono",
+      "english": "food",
+      "parts": {
+        "hiragana": ["た", "べ", "も", "の"]
+      }
+    },
+    {
+      "japanese": "食品",
+      "romaji": "shokuhin",
+      "english": "foodstuffs",
+      "parts": {
+        "hiragana": ["し", "ょ", "く", "ひ", "ん"]
+      }
+    },
+    {
+      "japanese": "飯",
+      "romaji": "meshi",
+      "english": "rice",
+      "parts": {
+        "hiragana": ["め", "し"]
+      }
+    },
+    {
+      "japanese": "寿司",
+      "romaji": "sushi",
+      "english": "sushi",
+      "parts": {
+        "hiragana": ["す", "し"]
+      }
+    },
+    {
+      "japanese": "ラーメン",
+      "romaji": "rāmen",
+      "english": "ramen",
+      "parts": {
+        "hiragana": ["ら", "ー", "め", "ん"]
+      }
+    },
+    {
+      "japanese": "ソース",
+      "romaji": "sōsu",
+      "english": "sauce",
+      "parts": {
+        "hiragana": ["そ", "ー", "す"]
+      }
+    },
+    {
+      "japanese": "和食",
+      "romaji": "washoku",
+      "english": "Japanese cuisine",
+      "parts": {
+        "hiragana": ["わ", "し", "ょ", "く"]
+      }
+    }
+  ]
+}
