@@ -13,3 +13,6 @@ Requires-Dist: requests>=2.31.0
 Requires-Dist: pandas>=2.2.0
 Requires-Dist: openpyxl>=3.1.2
 Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: SpeechRecognition>=3.10.1
+Requires-Dist: youtube-transcript-api>=0.6.2
+Requires-Dist: gTTS>=2.5.1

@@ -14,4 +14,9 @@ dependencies = [
     "pandas>=2.2.0",
     "openpyxl>=3.1.2",  # For Excel file support
     "python-dotenv>=1.0.1",  # For environment variables
+    "SpeechRecognition>=3.10.1",  # For speech-to-text conversion
+    "youtube-transcript-api>=0.6.2",  # For YouTube transcript downloading
+    "gTTS>=2.5.1",  # For text-to-speech conversion
+    "boto3>=1.34.0",
+    "python-dotenv>=1.0.0"
 ]

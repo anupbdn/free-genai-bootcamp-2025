@@ -1,0 +1,42 @@
+[project]
+name = "language-listening-app"
+version = "0.3.0"
+description = "A Language Learning Comprehension App using AI"
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    "streamlit>=1.32.0",
+    "streamlit-option-menu>=0.3.12",
+    "youtube_transcript_api>=0.6.2",
+    "chromadb>=0.4.22",
+    "langchain>=0.1.9",
+    "langchain-community>=0.0.24",
+    "sentence-transformers>=2.5.1",
+    "boto3>=1.34.34",
+    "python-dotenv>=1.0.1",
+    "requests>=2.31.0",
+    "pydantic>=2.6.1",
+    "python-multipart>=0.0.9",
+    "uuid>=1.30",
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.23.5",
+    "pytest-mock>=3.12.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["frontend", "backend", "config", "models", "utils"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=. --cov-report=term-missing"
