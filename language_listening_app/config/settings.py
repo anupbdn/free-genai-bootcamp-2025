@@ -25,7 +25,7 @@ CHUNK_OVERLAP = 100
 
 # Question Generation Configuration
 QUESTION_TYPES = ["comprehension", "detail", "inference"]
-DEFAULT_NUM_QUESTIONS = 3
+DEFAULT_NUM_QUESTIONS = 5
 SIMILARITY_THRESHOLD = 0.8
 
 # Model Configuration
