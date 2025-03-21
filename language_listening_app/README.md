@@ -9,6 +9,7 @@ A language learning application that generates comprehension questions from YouT
 - Support for multiple languages
 - Vector store for question management
 - Integration with Ollama and AWS Bedrock
+- Text-To-Speech using gTTS and Google.Cloud.Text-To-Speech
 
 ## Prerequisites
 

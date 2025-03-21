@@ -17,6 +17,7 @@ load_dotenv()
 # Import components - use absolute imports with the parent directory in sys.path
 from backend.app_service import AppService
 from models.schemas import Question, QuestionSet
+from utils.tts_utils import text_to_speech, get_audio_player
 # from language_listening_app.backend.app_service import AppService
 # from language_listening_app.models.schemas import Question, QuestionSet
 # from language_listening_app.backend.app_service import AppService
@@ -151,6 +152,23 @@ st.markdown("""
     h4 {
         color: #0D47A1;
     }
+    /* Audio section styling */
+    .audio-section {
+        background-color: #F5F5F5;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px 0;
+        border-left: 5px solid #2196F3;
+    }
+    /* Audio button styling */
+    .st-emotion-cache-1erivem {
+        border-color: #2196F3;
+        color: #2196F3;
+    }
+    .st-emotion-cache-1erivem:hover {
+        border-color: #0D47A1;
+        color: #0D47A1;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -188,6 +206,25 @@ def main():
         st.session_state.correct_answers = 0
     if 'question_results' not in st.session_state:
         st.session_state.question_results = []  # List to track results for each question
+    # TTS-related variables
+    if 'tts_slow' not in st.session_state:
+        st.session_state.tts_slow = False
+    if 'tts_engine' not in st.session_state:
+        st.session_state.tts_engine = "gtts"  # Default to gTTS
+    if 'google_credentials_path' not in st.session_state:
+        st.session_state.google_credentials_path = None
+    if 'google_voice_gender' not in st.session_state:
+        st.session_state.google_voice_gender = "NEUTRAL"
+    if 'google_voice_type' not in st.session_state:
+        st.session_state.google_voice_type = "Standard"
+    if 'google_voice_name' not in st.session_state:
+        st.session_state.google_voice_name = None
+    if 'google_speaking_rate' not in st.session_state:
+        st.session_state.google_speaking_rate = 1.0
+    if 'google_pitch' not in st.session_state:
+        st.session_state.google_pitch = 0.0
+    if 'available_voices' not in st.session_state:
+        st.session_state.available_voices = []
 
     # Sidebar
     with st.sidebar:
@@ -233,6 +270,92 @@ def main():
         # Number of questions
         num_questions = st.sidebar.slider("Number of Questions", min_value=3, max_value=20, value=10)
         st.session_state.num_questions = num_questions
+        
+        # Add Text-to-Speech settings
+        st.sidebar.markdown("---")
+        st.sidebar.header("Audio Settings")
+        
+        # TTS engine selection
+        tts_engine = st.sidebar.radio(
+            "Text-to-Speech Engine",
+            options=["gtts", "google_cloud"],
+            format_func=lambda x: "gTTS (Basic)" if x == "gtts" else "Google Cloud TTS (Advanced)",
+            index=0 if st.session_state.tts_engine == "gtts" else 1,
+            help="Select the text-to-speech engine. Google Cloud TTS offers better quality voices but requires credentials."
+        )
+        st.session_state.tts_engine = tts_engine
+        
+        # Slower speech option for gTTS
+        if tts_engine == "gtts":
+            tts_slow = st.sidebar.checkbox("Slower Speech Rate", value=st.session_state.tts_slow,
+                                         help="Use a slower speech rate for better comprehension")
+            st.session_state.tts_slow = tts_slow
+        
+        # Google Cloud TTS settings
+        elif tts_engine == "google_cloud":
+            from utils.tts_utils import GOOGLE_CLOUD_AVAILABLE, save_google_cloud_credentials
+            
+            if not GOOGLE_CLOUD_AVAILABLE:
+                st.sidebar.error("Google Cloud Text-to-Speech is not available. Please install the package: pip install google-cloud-texttospeech")
+            else:
+                # Credentials file uploader
+                st.sidebar.subheader("Google Cloud Credentials")
+                credentials_file = st.sidebar.file_uploader(
+                    "Upload Google Cloud credentials JSON file",
+                    type=["json"],
+                    help="Upload your Google Cloud service account credentials JSON file for Text-to-Speech."
+                )
+                
+                if credentials_file is not None:
+                    # Save the credentials file
+                    credentials_path = save_google_cloud_credentials(credentials_file)
+                    if credentials_path:
+                        st.session_state.google_credentials_path = credentials_path
+                        st.sidebar.success("Credentials uploaded successfully!")
+                
+                # Voice settings
+                st.sidebar.subheader("Voice Settings")
+                
+                # Voice gender
+                voice_gender = st.sidebar.selectbox(
+                    "Voice Gender",
+                    options=["NEUTRAL", "MALE", "FEMALE"],
+                    index=["NEUTRAL", "MALE", "FEMALE"].index(st.session_state.google_voice_gender),
+                    help="Select the gender of the voice."
+                )
+                st.session_state.google_voice_gender = voice_gender
+                
+                # Voice type
+                voice_type = st.sidebar.selectbox(
+                    "Voice Quality",
+                    options=["Standard", "WaveNet", "Neural2", "Studio"],
+                    index=["Standard", "WaveNet", "Neural2", "Studio"].index(st.session_state.google_voice_type)
+                    if st.session_state.google_voice_type in ["Standard", "WaveNet", "Neural2", "Studio"] else 0,
+                    help="Standard is basic. WaveNet, Neural2, and Studio offer progressively higher quality voices."
+                )
+                st.session_state.google_voice_type = voice_type
+                
+                # Speaking rate 
+                speaking_rate = st.sidebar.slider(
+                    "Speaking Rate", 
+                    min_value=0.5, 
+                    max_value=2.0, 
+                    value=st.session_state.google_speaking_rate,
+                    step=0.05,
+                    help="1.0 is normal speed. Lower values slow down speech, higher values speed it up."
+                )
+                st.session_state.google_speaking_rate = speaking_rate
+                
+                # Pitch
+                pitch = st.sidebar.slider(
+                    "Pitch",
+                    min_value=-10.0,
+                    max_value=10.0,
+                    value=st.session_state.google_pitch,
+                    step=1.0,
+                    help="0 is normal pitch. Negative values lower the pitch, positive values raise it."
+                )
+                st.session_state.google_pitch = pitch
         
         # Display question history in sidebar
         st.sidebar.markdown("---")
@@ -299,6 +422,7 @@ def home_page():
         - Self-evaluation to track your progress
         - Explanations provided in English for clarity
         - Practice with real-world content from YouTube
+        - **NEW:** Text-to-speech with natural voices
         """)
     
     # Display app settings
@@ -325,6 +449,58 @@ def home_page():
             }.get(x, x),
             key="default_language"
         )
+    
+    # TTS Settings
+    with st.expander("Text-to-Speech Settings"):
+        st.markdown("""
+        This app supports two TTS engines:
+        1. **gTTS (Basic)**: Simple Google Translate voices, no setup required
+        2. **Google Cloud TTS (Advanced)**: Higher quality voices with more options, requires credentials
+        
+        You can change the TTS engine in the sidebar under "Audio Settings".
+        """)
+        
+        # Google Cloud credentials setup
+        st.markdown("#### Google Cloud TTS Setup")
+        st.markdown("""
+        To use Google Cloud TTS, you need a Google Cloud account with Text-to-Speech API enabled. 
+        You can follow these steps:
+        
+        1. Create a Google Cloud account or sign in to your existing one
+        2. Create a new project
+        3. Enable the Text-to-Speech API
+        4. Create a service account key and download the JSON file
+        5. Upload the JSON file in the sidebar under "Audio Settings"
+        
+        **Demo credentials:** For testing purposes, you can use example credentials below. 
+        Note that these demo credentials may have usage limitations.
+        """)
+        
+        # Show example credentials for easy copy-paste
+        example_credentials = """{
+    "type": "service_account",
+    "project_id": "playground-s-11-2cfe7aab",
+    "private_key_id": "3e2aee350fbbca68b076bb89929ea20a05ee2d47",
+    "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCd6EH03QguKgRc\\nYT+Yif7MccFgFwbbahltcbsmNEBOreDUyZoHzWmtNXjElbl3ChWohZOwDJQ3sz+7\\n8uYPoxMRRNgyqwe5wLsb6uY5qrxgjVfchbPpOt4N3cV/JflEkzJk/3nVlFgiWhlH\\nQ2uypmiDN4JWhgJqZVRik8idoQZc5pI8Yt+oAbVn47SBljc3dBsgJ0sgB0GxNAHu\\nD6K2zEa4fhRwdZ1vTOLp+1iY+GB4UhujQkL0e5n2fNJ0tojgVQKmlcpjVds7cCpy\\nd2qSM9nE1NsYQBJipNloyp1y8I7aaFGBO1F21sSQVYO9JJw0CmcBdg7Xh1d48BdO\\nAkhGZ4QHAgMBAAECggEARaX8dY8KfSYuPzrrrJHtT2q7YvE1JpFBPutDo2G3nZyH\\nBwQXCur4+huUNY1evRk3HVoxnpylwX2wFmvYOrxwfBT0EUEryqwuO22b94KNzT56\\nqvtUNAKxj8cqRd9Pd4Y/W5ntuJ1SVHCOJscfmTBZ98qDlDtOlHQ2SLarbY9pOY8O\\nJfU/ljwE0IcLjv818m4Y961rURDuaFwRHEtPdc982gbDj8MFZOY9k3UL0ytPQMHN\\nM0A1IJA6oP4iA18V8KyWhn/twjky1n07EwVuhfYZCnaGRYlTkvy7BbdeC+k6e65f\\n8iPDkDslGIVyG7nt2HLTxgF28JpdrkOO1TCedjpdBQKBgQDQYXsGe+ZUCNawfUJw\\nJu8dto4TwFYDIICy3Ye/jqY46lFy0niDceRR9IcXNuWcP9TFyib0QLe9+vx7Z1Cq\\nrCEAst2dOci2ZvWO1UiV3fFuRz8NK/f5ogZMrKtKFYtQLZ1VgWkRYGHyaHea2Lx5\\nqKBUzxizupi5J47NvgiaSoCARQKBgQDB/gRI9YVtghrMrKz34NnWSJxCKSQJtG0j\\nMmkh04Px/hbm6WpqeIMU7UP6Y++zh9p4qBtBYDDisqX963AsfEdSM39RVXglOhNy\\nUexkR+Pl9ipVQw/j5W1btS4c8iCjIqkYYPC2srLtFxfK1TxijazxG3TGxabyllu/\\nOjDUc7W12wKBgQCJ6VowymOADnF4UQ5dh4cN1Tpm3A6Q9zv2JSOopdJhLMNHCQD1\\njbUcgIe/13dTV/OMC+SIFyUEOU5Mpe3/ZvhYrAh7/DhYb//ozkPB3CfjYofaQdVW\\ng+NDb6vV1jhjkizk4EcXVwC8HGO8OeFTa0ThnEau/LoDIKkkhbbP1qsBOQKBgQCC\\nyVbqOV0zbzvSMbiLhbRXm6x9jm8Ve+b4i8wFWiziwYN/Om7cSVNWkH/8F9RLHZRV\\nNEDr2oYa0IbIoiqGU2NiMAXuN8lAj978e+77zNwA9e2kfgoAg3UvFv931GXclkma\\nfgDLq76lyaPow8pqR0oJY5FfUXI0qtpAGmNBWKFxcQKBgHtp1YVaYAO7K4zHhRvE\\nCqZ3jtKp2G2H+J30W+KnB5Y1LcWb+gAIYmw6KCRQsNqwjNF5zclwRA6B9s0u0Ueh\\nnH6tJHXpjbv8KU3KqdSEHdb2IrVZuK9UPbFB2FoSFr6zs4CPa6BxLn0aWalzR0mU\\nipso6tlfWkP2e6Rp5r0t52bC\\n-----END PRIVATE KEY-----\\n",
+    "client_email": "cli-service-account-1@playground-s-11-2cfe7aab.iam.gserviceaccount.com",
+    "client_id": "112330951363357575411",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cli-service-account-1%40playground-s-11-2cfe7aab.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}"""
+        
+        st.code(example_credentials, language="json")
+        
+        # Instructions on how to use the credentials
+        st.markdown("""
+        To use these credentials:
+        1. Copy the JSON above
+        2. Create a new file in any text editor and paste the JSON
+        3. Save the file as `google_cloud_credentials.json`
+        4. Upload the file in the sidebar under "Audio Settings"
+        """)
     
     # Quick start button
     if st.button("Go to Interactive Learning"):
@@ -368,8 +544,40 @@ def history_page():
                                 # Display a few sample questions
                                 st.markdown("### Sample Questions:")
                                 for j, question in enumerate(questions[:3], 1):
-                                    st.markdown(f"**Question {j}:** {question.text}")
-                                    st.markdown(f"**Answer:** {question.answer}")
+                                    # Create columns for question text and listen button
+                                    col1, col2 = st.columns([4, 1])
+                                    with col1:
+                                        st.markdown(f"**Question {j}:** {question.text}")
+                                    with col2:
+                                        # Add audio button for question
+                                        if st.button(f"🔊 Listen", key=f"listen_vq_{i}_{j}"):
+                                            voice_options = get_voice_options()
+                                            audio_bytes = text_to_speech(
+                                                question.text, 
+                                                transcript.language, 
+                                                st.session_state.get('tts_slow', False),
+                                                st.session_state.get('tts_engine', 'gtts'),
+                                                voice_options
+                                            )
+                                            st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
+                                    
+                                    # Create columns for answer
+                                    col1, col2 = st.columns([4, 1])
+                                    with col1:
+                                        st.markdown(f"**Answer:** {question.answer}")
+                                    with col2:
+                                        # Add audio button for answer
+                                        if st.button(f"🔊 Listen", key=f"listen_va_{i}_{j}"):
+                                            voice_options = get_voice_options()
+                                            audio_bytes = text_to_speech(
+                                                question.answer, 
+                                                transcript.language, 
+                                                st.session_state.get('tts_slow', False),
+                                                st.session_state.get('tts_engine', 'gtts'),
+                                                voice_options
+                                            )
+                                            st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
+                                    
                                     st.markdown("---")
                                 
                                 # Button to practice with this question set
@@ -435,7 +643,22 @@ def history_page():
                 
                 # Display questions
                 for j, q in enumerate(question_set.get('questions', [])):
-                    st.markdown(f"**Question {j+1}:** {q.get('text', '')}")
+                    # Create columns for question text and listen button
+                    col1, col2 = st.columns([4, 1])
+                    with col1:
+                        st.markdown(f"**Question {j+1}:** {q.get('text', '')}")
+                    with col2:
+                        # Add audio button for question
+                        if st.button(f"🔊 Listen", key=f"listen_q_{i}_{j}"):
+                            voice_options = get_voice_options()
+                            audio_bytes = text_to_speech(
+                                q.get('text', ''), 
+                                language, 
+                                st.session_state.get('tts_slow', False),
+                                st.session_state.get('tts_engine', 'gtts'),
+                                voice_options
+                            )
+                            st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
                     
                     # Use a button to show answer instead of nested expander
                     answer_key = f"show_answer_{i}_{j}"
@@ -446,7 +669,23 @@ def history_page():
                         st.session_state[answer_key] = not st.session_state[answer_key]
                     
                     if st.session_state[answer_key]:
-                        st.markdown(f"**Answer:** {q.get('answer', '')}")
+                        # Create columns for answer
+                        col1, col2 = st.columns([4, 1])
+                        with col1:
+                            st.markdown(f"**Answer:** {q.get('answer', '')}")
+                        with col2:
+                            # Add audio button for answer
+                            if st.button(f"🔊 Listen", key=f"listen_a_{i}_{j}"):
+                                voice_options = get_voice_options()
+                                audio_bytes = text_to_speech(
+                                    q.get('answer', ''), 
+                                    language, 
+                                    st.session_state.get('tts_slow', False),
+                                    st.session_state.get('tts_engine', 'gtts'),
+                                    voice_options
+                                )
+                                st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
+                        
                         if 'explanation' in q:
                             st.markdown(f"**Explanation:** {q.get('explanation', '')}")
                         if 'difficulty' in q:
@@ -668,8 +907,30 @@ def display_questions():
     st.progress((current_index) / len(questions))
     st.markdown(f"**Question {current_index + 1} of {len(questions)}**")
     
-    # Display question
-    st.markdown(f"### {current_question.text}")
+    # Display question with audio option
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.markdown(f"### {current_question.text}")
+    with col2:
+        # Get language from session state or use question language if available
+        language = None
+        if st.session_state.transcript and hasattr(st.session_state.transcript, 'language'):
+            language = st.session_state.transcript.language
+        else:
+            # Try to get from session state
+            language = st.session_state.get('language', 'en')
+        
+        # Add TTS button for question
+        if st.button("🔊 Listen to Question", key=f"listen_question_{current_index}"):
+            voice_options = get_voice_options()
+            audio_bytes = text_to_speech(
+                current_question.text, 
+                language, 
+                st.session_state.get('tts_slow', False),
+                st.session_state.get('tts_engine', 'gtts'),
+                voice_options
+            )
+            st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
     
     # User answer input
     user_answer = st.text_area("Your Answer", value=st.session_state.user_answer, height=100)
@@ -682,7 +943,24 @@ def display_questions():
     # Display answer if button clicked
     if st.session_state.show_answer:
         st.markdown("---")
-        st.markdown(f"**Correct Answer:** {current_question.answer}")
+        
+        # Display answer with audio option
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"**Correct Answer:** {current_question.answer}")
+        with col2:
+            # Add TTS button for answer
+            if st.button("🔊 Listen to Answer", key=f"listen_answer_{current_index}"):
+                voice_options = get_voice_options()
+                audio_bytes = text_to_speech(
+                    current_question.answer, 
+                    language, 
+                    st.session_state.get('tts_slow', False),
+                    st.session_state.get('tts_engine', 'gtts'),
+                    voice_options
+                )
+                st.markdown(f"<div class='audio-section'>{get_audio_player(audio_bytes)}</div>", unsafe_allow_html=True)
+        
         st.markdown(f"**Explanation:** {current_question.explanation}")
         
         # Self-evaluation section
@@ -731,6 +1009,18 @@ st.markdown("""
 - For best results, use videos with clear speech and good audio quality
 - If you encounter errors, try a different video or language
 """)
+
+# Create voice options dictionary from session state
+def get_voice_options():
+    """Create a dictionary of voice options from session state"""
+    return {
+        'voice_name': st.session_state.get('google_voice_name'),
+        'voice_gender': st.session_state.get('google_voice_gender', 'NEUTRAL'),
+        'voice_type': st.session_state.get('google_voice_type', 'Standard'),
+        'speaking_rate': st.session_state.get('google_speaking_rate', 1.0),
+        'pitch': st.session_state.get('google_pitch', 0.0),
+        'credentials_path': st.session_state.get('google_credentials_path')
+    }
 
 # Main function call
 if __name__ == "__main__":

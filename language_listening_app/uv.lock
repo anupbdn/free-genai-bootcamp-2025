@@ -781,6 +781,28 @@ wheels = [
 ]
 
 [[package]]
+name = "google-api-core"
+version = "2.24.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-auth" },
+    { name = "googleapis-common-protos" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/5c/085bcb872556934bb119e5e09de54daa07873f6866b8f0303c49e72287f7/google_api_core-2.24.2.tar.gz", hash = "sha256:81718493daf06d96d6bc76a91c23874dbf2fac0adbbf542831b805ee6e974696", size = 163516 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/46/95/f472d85adab6e538da2025dfca9e976a0d125cc0af2301f190e77b76e51c/google_api_core-2.24.2-py3-none-any.whl", hash = "sha256:810a63ac95f3c441b7c0e43d344e372887f62ce9071ba972eacf32672e072de9", size = 160061 },
+]
+
+[package.optional-dependencies]
+grpc = [
+    { name = "grpcio" },
+    { name = "grpcio-status" },
+]
+
+[[package]]
 name = "google-auth"
 version = "2.38.0"
 source = { registry = "https://pypi.org/simple" }
@@ -792,6 +814,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c6/eb/d504ba1daf190af6b204a9d4714d457462b486043744901a6eeea711f913/google_auth-2.38.0.tar.gz", hash = "sha256:8285113607d3b80a3f1543b75962447ba8a09fe85783432a784fdeef6ac094c4", size = 270866 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9d/47/603554949a37bca5b7f894d51896a9c534b9eab808e2520a748e081669d0/google_auth-2.38.0-py2.py3-none-any.whl", hash = "sha256:e7dae6694313f434a2727bf2906f27ad259bae090d7aa896590d86feec3d9d4a", size = 210770 },
+]
+
+[[package]]
+name = "google-cloud-texttospeech"
+version = "2.25.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "google-api-core", extra = ["grpc"] },
+    { name = "google-auth" },
+    { name = "proto-plus" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1e/3c/e1243561ce766940f080bc691b448db1228adca3ccd5fcff8a21b8464b97/google_cloud_texttospeech-2.25.1.tar.gz", hash = "sha256:37dd7c3f023f5a97db72989718d96530e05fae270e5d1de41d104b316a770afc", size = 181107 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/73/928e08724be0ce90bb7a0876fa8a69703a93995d3382db23d8ac42bfcdd6/google_cloud_texttospeech-2.25.1-py3-none-any.whl", hash = "sha256:599ed2be08076b6abd64ab7b84ad28111a99ee34bf2ce3e0474cc5ae2d423771", size = 188167 },
 ]
 
 [[package]]
@@ -893,6 +930,33 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ac/73/d68c745d34e43a80440da4f3d79fa02c56cb118c2a26ba949f3cfd8316d7/grpcio-1.70.0-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:5413549fdf0b14046c545e19cfc4eb1e37e9e1ebba0ca390a8d4e9963cab44d2", size = 6199038 },
     { url = "https://files.pythonhosted.org/packages/7e/dd/991f100b8c31636b4bb2a941dbbf54dbcc55d69c722cfa038c3d017eaa0c/grpcio-1.70.0-cp39-cp39-win32.whl", hash = "sha256:b745d2c41b27650095e81dea7091668c040457483c9bdb5d0d9de8f8eb25e59f", size = 3617512 },
     { url = "https://files.pythonhosted.org/packages/4d/80/1aa2ba791207a13e314067209b48e1a0893ed8d1f43ef012e194aaa6c2de/grpcio-1.70.0-cp39-cp39-win_amd64.whl", hash = "sha256:a31d7e3b529c94e930a117b2175b2efd179d96eb3c7a21ccb0289a8ab05b645c", size = 4303506 },
+]
+
+[[package]]
+name = "grpcio-status"
+version = "1.70.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "googleapis-common-protos" },
+    { name = "grpcio" },
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4c/d1/2397797c810020eac424e1aac10fbdc5edb6b9b4ad6617e0ed53ca907653/grpcio_status-1.70.0.tar.gz", hash = "sha256:0e7b42816512433b18b9d764285ff029bde059e9d41f8fe10a60631bd8348101", size = 13681 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e6/34/49e558040e069feebac70cdd1b605f38738c0277ac5d38e2ce3d03e1b1ec/grpcio_status-1.70.0-py3-none-any.whl", hash = "sha256:fc5a2ae2b9b1c1969cc49f3262676e6854aa2398ec69cb5bd6c47cd501904a85", size = 14429 },
+]
+
+[[package]]
+name = "gtts"
+version = "2.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8b/63/fd0d51530696af71b17d3d3d8aacf181ae2040065dd8fe54e85c32ca28ec/gTTS-2.3.2.tar.gz", hash = "sha256:5314f7dedb4230889ff4773edd37e101408497e166982027b8d9582a4585eb4f", size = 23652 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/da/4b8bb016aca4abebe5b582ce1b17604a1d9bc91499ac2214e1fa250f69b6/gTTS-2.3.2-py3-none-any.whl", hash = "sha256:9132e409603f34d5023458e3e10ce2f5df55498d7a2ee781c9adbe616fbd4152", size = 28990 },
 ]
 
 [[package]]
@@ -1248,6 +1312,8 @@ source = { editable = "." }
 dependencies = [
     { name = "boto3" },
     { name = "chromadb" },
+    { name = "google-cloud-texttospeech" },
+    { name = "gtts" },
     { name = "langchain" },
     { name = "langchain-community" },
     { name = "pydantic" },
@@ -1275,6 +1341,8 @@ test = [
 requires-dist = [
     { name = "boto3", specifier = ">=1.34.34" },
     { name = "chromadb", specifier = ">=0.4.22" },
+    { name = "google-cloud-texttospeech", specifier = ">=2.14.1" },
+    { name = "gtts", specifier = "==2.3.2" },
     { name = "langchain", specifier = ">=0.1.9" },
     { name = "langchain-community", specifier = ">=0.0.24" },
     { name = "pydantic", specifier = ">=2.6.1" },
@@ -2248,6 +2316,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/d7/92/e07bd88ece413fd069d66533d95cbc83649b57b60990f26a35a7f84e25ed/propcache-0.3.0-cp39-cp39-win32.whl", hash = "sha256:7cedd25e5f678f7738da38037435b340694ab34d424938041aa630d8bac42663", size = 41152 },
     { url = "https://files.pythonhosted.org/packages/26/8f/676ea691f5788bd9376ba77475204093a559c883ee1b6def0291e41020dc/propcache-0.3.0-cp39-cp39-win_amd64.whl", hash = "sha256:bf4298f366ca7e1ad1d21bbb58300a6985015909964077afd37559084590c929", size = 45263 },
     { url = "https://files.pythonhosted.org/packages/b5/35/6c4c6fc8774a9e3629cd750dc24a7a4fb090a25ccd5c3246d127b70f9e22/propcache-0.3.0-py3-none-any.whl", hash = "sha256:67dda3c7325691c2081510e92c561f465ba61b975f481735aefdfc845d2cd043", size = 12101 },
+]
+
+[[package]]
+name = "proto-plus"
+version = "1.26.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f4/ac/87285f15f7cce6d4a008f33f1757fb5a13611ea8914eb58c3d0d26243468/proto_plus-1.26.1.tar.gz", hash = "sha256:21a515a4c4c0088a773899e23c7bbade3d18f9c66c73edd4c7ee3816bc96a012", size = 56142 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4e/6d/280c4c2ce28b1593a19ad5239c8b826871fc6ec275c21afc8e1820108039/proto_plus-1.26.1-py3-none-any.whl", hash = "sha256:13285478c2dcf2abb829db158e1047e2f1e8d63a077d94263c2b88b043c75a66", size = 50163 },
 ]
 
 [[package]]

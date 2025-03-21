@@ -17,4 +17,8 @@ requests==2.31.0
 # Utilities
 pydantic==2.6.1
 python-multipart==0.0.9
-uuid==1.30 
+uuid==1.30
+
+# Text-to-Speech
+gtts==2.3.2
+google-cloud-texttospeech==2.14.1 
