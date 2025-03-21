@@ -478,17 +478,17 @@ def home_page():
         
         # Show example credentials for easy copy-paste
         example_credentials = """{
-    "type": "service_account",
-    "project_id": "playground-s-11-2cfe7aab",
-    "private_key_id": "3e2aee350fbbca68b076bb89929ea20a05ee2d47",
-    "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCd6EH03QguKgRc\\nYT+Yif7MccFgFwbbahltcbsmNEBOreDUyZoHzWmtNXjElbl3ChWohZOwDJQ3sz+7\\n8uYPoxMRRNgyqwe5wLsb6uY5qrxgjVfchbPpOt4N3cV/JflEkzJk/3nVlFgiWhlH\\nQ2uypmiDN4JWhgJqZVRik8idoQZc5pI8Yt+oAbVn47SBljc3dBsgJ0sgB0GxNAHu\\nD6K2zEa4fhRwdZ1vTOLp+1iY+GB4UhujQkL0e5n2fNJ0tojgVQKmlcpjVds7cCpy\\nd2qSM9nE1NsYQBJipNloyp1y8I7aaFGBO1F21sSQVYO9JJw0CmcBdg7Xh1d48BdO\\nAkhGZ4QHAgMBAAECggEARaX8dY8KfSYuPzrrrJHtT2q7YvE1JpFBPutDo2G3nZyH\\nBwQXCur4+huUNY1evRk3HVoxnpylwX2wFmvYOrxwfBT0EUEryqwuO22b94KNzT56\\nqvtUNAKxj8cqRd9Pd4Y/W5ntuJ1SVHCOJscfmTBZ98qDlDtOlHQ2SLarbY9pOY8O\\nJfU/ljwE0IcLjv818m4Y961rURDuaFwRHEtPdc982gbDj8MFZOY9k3UL0ytPQMHN\\nM0A1IJA6oP4iA18V8KyWhn/twjky1n07EwVuhfYZCnaGRYlTkvy7BbdeC+k6e65f\\n8iPDkDslGIVyG7nt2HLTxgF28JpdrkOO1TCedjpdBQKBgQDQYXsGe+ZUCNawfUJw\\nJu8dto4TwFYDIICy3Ye/jqY46lFy0niDceRR9IcXNuWcP9TFyib0QLe9+vx7Z1Cq\\nrCEAst2dOci2ZvWO1UiV3fFuRz8NK/f5ogZMrKtKFYtQLZ1VgWkRYGHyaHea2Lx5\\nqKBUzxizupi5J47NvgiaSoCARQKBgQDB/gRI9YVtghrMrKz34NnWSJxCKSQJtG0j\\nMmkh04Px/hbm6WpqeIMU7UP6Y++zh9p4qBtBYDDisqX963AsfEdSM39RVXglOhNy\\nUexkR+Pl9ipVQw/j5W1btS4c8iCjIqkYYPC2srLtFxfK1TxijazxG3TGxabyllu/\\nOjDUc7W12wKBgQCJ6VowymOADnF4UQ5dh4cN1Tpm3A6Q9zv2JSOopdJhLMNHCQD1\\njbUcgIe/13dTV/OMC+SIFyUEOU5Mpe3/ZvhYrAh7/DhYb//ozkPB3CfjYofaQdVW\\ng+NDb6vV1jhjkizk4EcXVwC8HGO8OeFTa0ThnEau/LoDIKkkhbbP1qsBOQKBgQCC\\nyVbqOV0zbzvSMbiLhbRXm6x9jm8Ve+b4i8wFWiziwYN/Om7cSVNWkH/8F9RLHZRV\\nNEDr2oYa0IbIoiqGU2NiMAXuN8lAj978e+77zNwA9e2kfgoAg3UvFv931GXclkma\\nfgDLq76lyaPow8pqR0oJY5FfUXI0qtpAGmNBWKFxcQKBgHtp1YVaYAO7K4zHhRvE\\nCqZ3jtKp2G2H+J30W+KnB5Y1LcWb+gAIYmw6KCRQsNqwjNF5zclwRA6B9s0u0Ueh\\nnH6tJHXpjbv8KU3KqdSEHdb2IrVZuK9UPbFB2FoSFr6zs4CPa6BxLn0aWalzR0mU\\nipso6tlfWkP2e6Rp5r0t52bC\\n-----END PRIVATE KEY-----\\n",
-    "client_email": "cli-service-account-1@playground-s-11-2cfe7aab.iam.gserviceaccount.com",
-    "client_id": "112330951363357575411",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cli-service-account-1%40playground-s-11-2cfe7aab.iam.gserviceaccount.com",
-    "universe_domain": "googleapis.com"
+    "type": "example",
+    "project_id": "example",
+    "private_key_id": "example",
+    "private_key": "example",
+    "client_email": "example",
+    "client_id": "example",
+    "auth_uri": "example",
+    "token_uri": "example",
+    "auth_provider_x509_cert_url": "example",
+    "client_x509_cert_url": "example",
+    "universe_domain": "example"
 }"""
         
         st.code(example_credentials, language="json")
