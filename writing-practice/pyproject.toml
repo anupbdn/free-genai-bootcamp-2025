@@ -1,0 +1,18 @@
+[project]
+name = "language-writing-app"
+version = "0.1.0"
+description = "writing practice app"
+requires-python = ">=3.13.1"  # This is the correct way to specify Python version
+dependencies = [
+    "streamlit>=1.32.0",
+    "requests>=2.31.0",
+    "boto3>=1.34.0",
+    "streamlit-drawable-canvas>=0.9.3",
+    "google-cloud-vision>=3.10.1",
+    "pillow>=11.1.0",
+    "numpy>=2.2.4",
+    "opencv-python>=4.9.0",  # For advanced image processing if needed
+    "python-magic>=0.4.27",  # For better file type validation
+    "manga-ocr",
+    "pykakasi>=2.2.1",
+]
