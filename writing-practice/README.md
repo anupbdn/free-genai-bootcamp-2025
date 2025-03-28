@@ -75,7 +75,7 @@ The app will open in your default web browser at `http://localhost:8501`
 
 ## Application Flow
 
-![Application Flow Chart](assets/flow-chart.png)
+![Application Flow Chart](assets/application_flow.png)
 
 The flow chart above illustrates the complete application workflow:
 1. **Input Handling**: Users can either draw characters or upload images
