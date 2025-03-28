@@ -18,15 +18,23 @@ The Japanese Writing Practice App is an interactive web application designed to 
   - Maintains aspect ratio using Lanczos resampling
 
 ### Character Sets
-The app includes three predefined character sets:
+The app includes four practice modes:
 1. **Hiragana**: Basic Japanese syllabary (あ, い, う, etc.)
 2. **Katakana**: Syllabary used for foreign words (ア, イ, ウ, etc.)
 3. **Basic Kanji**: Fundamental Chinese characters (一, 二, 三, etc.)
+4. **Random Selection**: Dynamic words fetched from backend API
 
 Each character is stored with:
 - The actual character (char)
 - Its romanized reading (romaji)
 - Additional context for Kanji (meanings in parentheses)
+
+### Backend Integration
+The Random Selection mode connects to a FastAPI backend:
+- Fetches Japanese words from `/api/words` endpoint
+- Caches words in session state for efficient access
+- Provides refresh functionality to get new words
+- Gracefully falls back to basic characters if backend is unavailable
 
 ### Character Recognition System
 The app uses a sophisticated OCR pipeline for character validation:
@@ -50,6 +58,7 @@ The app uses a sophisticated OCR pipeline for character validation:
 ### Prerequisites
 - Python 3.13.1 or higher
 - UV package manager
+- FastAPI backend running on `localhost:8000` (for random selection mode)
 
 ### Installation Steps
 
@@ -66,7 +75,14 @@ The app uses a sophisticated OCR pipeline for character validation:
    uv pip install -r requirements.txt
    ```
 
-3. **Run the application**:
+3. **Start the backend** (required for random selection mode):
+   ```bash
+   # In a separate terminal
+   cd backend-FastApi
+   uvicorn src.main:app --reload
+   ```
+
+4. **Run the application**:
    ```bash
    streamlit run src/app.py
    ```
@@ -80,8 +96,18 @@ The app will open in your default web browser at `http://localhost:8501`
 The flow chart above illustrates the complete application workflow:
 1. **Input Handling**: Users can either draw characters or upload images
 2. **Processing Pipeline**: Both inputs go through image processing and OCR
-3. **Character Sets**: Separate paths for Hiragana, Katakana, and Kanji practice
+3. **Character Sets**: Separate paths for Hiragana, Katakana, Kanji, and Random Selection
 4. **Validation**: Matches are scored, and feedback is provided for non-matches
+
+## Features
+- Interactive drawing canvas with customizable settings
+- Multiple character set support (Hiragana, Katakana, Kanji)
+- Random Selection mode with backend API integration
+- Real-time character recognition and validation
+- Progress tracking with accuracy metrics
+- Detailed OCR feedback for learning
+- Image upload capability for offline practice
+- Word caching for efficient performance
 
 ## Technical Requirements
 - streamlit>=1.32.0
@@ -90,4 +116,5 @@ The flow chart above illustrates the complete application workflow:
 - pykakasi>=2.2.1
 - Pillow>=11.1.0
 - numpy>=2.2.4
-- python-magic>=0.4.27 
+- python-magic>=0.4.27
+- requests>=2.31.0  # For backend API integration 

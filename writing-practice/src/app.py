@@ -7,6 +7,7 @@ import io
 import random
 from manga_ocr import MangaOcr
 import pykakasi
+import requests
 
 
 # Global variable to store the MangaOCR instance
@@ -83,14 +84,39 @@ BASIC_KANJI = [
     {'char': '木', 'romaji': 'ki/moku (tree/wood)'}
 ]
 
+# Add function to fetch words from backend
+def fetch_words_from_backend():
+    """Fetch words from the backend API."""
+    try:
+        response = requests.get("http://localhost:8000/api/words?skip=0&limit=100")
+        if response.status_code == 200:
+            words = response.json()
+            # Convert to our app's format
+            return [{'char': word.get('japanese', ''), 'romaji': word.get('english', '')} 
+                   for word in words if word.get('japanese') and word.get('english')]
+        return []
+    except Exception as e:
+        st.sidebar.error(f"Failed to connect to backend: {str(e)}")
+        return []
+
+# Modify get_random_character function
 def get_random_character(mode='hiragana'):
     """Get a random character based on the selected mode."""
-    character_set = {
-        'hiragana': HIRAGANA,
-        'katakana': KATAKANA,
-        'basic_kanji': BASIC_KANJI
-    }[mode]
-    return random.choice(character_set)
+    if mode == 'random selection':
+        # Initialize backend words in session state if not present
+        if 'backend_words' not in st.session_state:
+            st.session_state.backend_words = fetch_words_from_backend()
+        
+        # Use backend words if available, otherwise fallback to hiragana
+        word_list = st.session_state.backend_words if st.session_state.backend_words else HIRAGANA
+        return random.choice(word_list)
+    else:
+        character_set = {
+            'hiragana': HIRAGANA,
+            'katakana': KATAKANA,
+            'basic_kanji': BASIC_KANJI
+        }[mode]
+        return random.choice(character_set)
 
 def main():
     st.title("Japanese Writing Practice ✍️")
@@ -102,26 +128,45 @@ def main():
         # Practice mode selection
         practice_mode = st.radio(
             "Select Practice Mode",
-            ['hiragana', 'katakana', 'basic_kanji'],
+            ['hiragana', 'katakana', 'basic_kanji', 'random selection'],
             key='practice_mode'
         )
         
-        # Character selection based on mode
-        character_set = {
-            'hiragana': HIRAGANA,
-            'katakana': KATAKANA,
-            'basic_kanji': BASIC_KANJI
-        }[practice_mode]
+        # Add refresh button for random selection mode
+        if practice_mode == 'random selection':
+            if st.button("Refresh Word List"):
+                st.session_state.backend_words = fetch_words_from_backend()
+                if not st.session_state.backend_words:
+                    st.warning("Could not fetch words from backend. Using basic characters instead.")
+            
+            # Show current word list info
+            if 'backend_words' in st.session_state and st.session_state.backend_words:
+                st.info(f"Loaded {len(st.session_state.backend_words)} words from backend")
         
-        # Format display options for selectbox
-        char_options = [f"{item['char']} ({item['romaji']})" for item in character_set]
-        selected_index = st.selectbox(
-            "Select Character to Practice",
-            range(len(char_options)),
-            format_func=lambda x: char_options[x],
-            key='char_index'
-        )
-        st.session_state.current_character = character_set[selected_index]
+        # Modified character selection based on mode
+        if practice_mode != 'random selection':
+            character_set = {
+                'hiragana': HIRAGANA,
+                'katakana': KATAKANA,
+                'basic_kanji': BASIC_KANJI
+            }[practice_mode]
+            
+            # Format display options for selectbox
+            char_options = [f"{item['char']} ({item['romaji']})" for item in character_set]
+            selected_index = st.selectbox(
+                "Select Character to Practice",
+                range(len(char_options)),
+                format_func=lambda x: char_options[x],
+                key='char_index'
+            )
+            st.session_state.current_character = character_set[selected_index]
+        else:
+            # For random selection, use the current word or get a new one
+            if 'backend_words' in st.session_state and st.session_state.backend_words:
+                if st.button("Get New Random Word"):
+                    st.session_state.current_character = random.choice(st.session_state.backend_words)
+            else:
+                st.session_state.current_character = random.choice(HIRAGANA)
         
         # Drawing settings
         st.session_state.stroke_width = st.slider(
