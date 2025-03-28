@@ -21,7 +21,7 @@ kakasi.setMode("r", "Hepburn")  # Use Hepburn romanization
 converter = kakasi.getConverter()
 
 # Load image
-image = Image.open('Ki.png')
+image = Image.open('original-o.png')
 
 # Get cached MangaOCR instance
 mocr = get_manga_ocr()
