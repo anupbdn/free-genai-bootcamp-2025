@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: chatqna-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - chatqna-ui
+      - simple-backend
+    networks:
+      - app-network
+
+  chatqna-ui:
+    image: opea/chatqna-ui:latest
+    container_name: chatqna-ui
+    expose:
+      - "5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080
+      - VITE_OLLAMA_BASE_URL=http://localhost:11434
+      - VITE_CHAT_API=/v1/chatqna
+      - VITE_INGEST_API=/v1/dataprep/ingest
+      - VITE_GET_FILES_API=/v1/dataprep/get
+      - VITE_DELETE_API=/v1/dataprep/delete
+    networks:
+      - app-network
+
+  simple-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simple-backend
+    expose:
+      - "8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app-network
+
+volumes:
+  ollama_data:
+
+networks:
+  app-network:
+    driver: bridge 
