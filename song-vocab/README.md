@@ -73,15 +73,15 @@ Perfect for:
 
 ### Installation
 
-1. Create and activate a virtual environment:
+1. We are using uv to manage the project:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+uv sync --active
+source .venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 2. Install required packages:
 ```bash
-pip install -r requirements.txt
+cat pyproject.toml
 ```
 
 3. Start Ollama with Mistral model:
