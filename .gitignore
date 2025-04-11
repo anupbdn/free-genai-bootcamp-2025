@@ -8,3 +8,4 @@ rough-works/*
 package-lock.json
 uv.lock
 requirements-no-mupdf.txt
+language_learning_api.egg-info
