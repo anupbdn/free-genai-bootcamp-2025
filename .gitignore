@@ -6,6 +6,5 @@ opea-project/GenAIComps
 opea-project/GenAIExamples
 rough-works/*
 package-lock.json
-package.json
 uv.lock
 requirements-no-mupdf.txt

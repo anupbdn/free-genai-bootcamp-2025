@@ -1,5 +1,7 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from transformers import pipeline
+import requests
+import json
 
 def get_transcript(video_id):
     """Fetches the transcript of a YouTube video."""
@@ -100,6 +102,35 @@ def get_video_id(url):
 
     return None
 
+def categorize_with_ollama(text):
+    """Uses Ollama to categorize the content of the summary."""
+    try:
+        # Prepare the prompt for categorization
+        prompt = f"""Please analyze this summary of transcript from a youtube video and provide:
+        1. Divide the text into parts
+        2. consider the parts are different chapters of the full content
+        3. Key themes or topics (3-4 points) that was discussed or mentioned
+        4. Make sure when you explain you use the word "video" for example:  This video talks about, This video discusses about . This way when the user read he understands that he is reading about summary of a video
+       
+        
+        Text to analyze: {text}"""
+        
+        # Make request to Ollama
+        response = requests.post('http://localhost:11434/api/generate',
+                               json={
+                                   "model": "mistral",
+                                   "prompt": prompt,
+                                   "stream": False
+                               })
+        
+        if response.status_code == 200:
+            return response.json()['response']
+        else:
+            return "Error: Could not connect to Ollama service"
+            
+    except Exception as e:
+        return f"Error during categorization: {e}"
+
 if __name__ == "__main__":
     youtube_url = input("Enter YouTube video URL: ")
     video_id = get_video_id(youtube_url)
@@ -109,7 +140,6 @@ if __name__ == "__main__":
         exit()
 
     transcript = get_transcript(video_id)
-    # print(transcript)
 
     if transcript:
         summary = summarize_text(transcript)
@@ -117,6 +147,11 @@ if __name__ == "__main__":
         if summary:
             print("\nSummary:")
             print(summary)
+            
+            print("\nAnalyzing content with Ollama...")
+            categorization = categorize_with_ollama(summary)
+            print("\nContent Analysis:")
+            print(categorization)
         else:
             print("Failed to generate summary.")
     else:

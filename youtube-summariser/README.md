@@ -33,12 +33,13 @@ This application helps users quickly understand the content of YouTube videos by
 1. **Setup**:
    ```bash
    # Install required packages
-   pip install youtube_transcript_api transformers torch
+   uv sync --active
    ```
 
 2. **Running the Application**:
    ```bash
-   python youtube_summariser.py
+   source .venv/bin/activate
+   uv run youtube_summariser.py
    ```
 
 3. **Usage Steps**:
