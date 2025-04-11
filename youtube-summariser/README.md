@@ -19,6 +19,7 @@ This application helps users quickly understand the content of YouTube videos by
   - Uses recursive summarization for longer content
 - **Flexible Summary Generation**: Creates concise, coherent summaries while preserving key information
 - **URL Support**: Works with both standard YouTube URLs (youtube.com) and shortened URLs (youtu.be)
+- **Categorisation of Content**: From the final summary of the content, content will be categorised as chapters of whole summary for you to read.
 
 ## Tech Stack
 
@@ -27,6 +28,7 @@ This application helps users quickly understand the content of YouTube videos by
 - **transformers (Hugging Face)**: For text summarization
   - Uses the BART-large-CNN model for high-quality summarization
 - **urllib**: For parsing and validating YouTube URLs
+- **ollama**: For using locally running mistral
 
 ## How to Use
 
