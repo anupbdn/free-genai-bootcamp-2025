@@ -1,5 +1,0 @@
-# Copy all requirements except pymupdf
-bs4
-cairosvg
-docx2txt
-# ... other requirements ... 
