@@ -1,0 +1,12 @@
+[project]
+name = "youtube-summariser"
+version = "0.1.0"
+description = "Youtube summarising using transformers"
+requires-python = ">=3.13.1"  # This is the correct way to specify Python version
+dependencies = [
+    "youtube-transcript-api",
+    "transformers",
+    "torch",
+    "torchvision",
+    "torchaudio",
+]
