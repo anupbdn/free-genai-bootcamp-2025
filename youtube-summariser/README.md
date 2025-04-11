@@ -38,17 +38,25 @@ This application helps users quickly understand the content of YouTube videos by
    uv sync --active
    ```
 
-2. **Running the Application**:
+2. **Start Ollama Mistral**:
+   ```bash
+   # Make sure Ollama is installed first (https://ollama.ai)
+   # Then pull and run the Mistral model
+   ollama pull mistral
+   ollama run mistral
+   ```
+
+3. **Running the Application**:
    ```bash
    source .venv/bin/activate
    uv run youtube_summariser.py
    ```
 
-3. **Usage Steps**:
+4. **Usage Steps**:
    - Launch the application
    - Enter a YouTube video URL when prompted
    - Wait for the summary to be generated
-   - Read the generated summary
+   - Read the generated summary and categorization
 
 Note: The video must have available transcripts/subtitles for the summarizer to work.
 

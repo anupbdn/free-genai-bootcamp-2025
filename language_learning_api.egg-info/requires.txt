@@ -1,0 +1,13 @@
+fastapi>=0.112.0
+uvicorn>=0.30.0
+sqlalchemy>=2.0.0
+pydantic>=2.0.0
+pyjwt>=2.8.0
+streamlit>=1.32.0
+requests>=2.31.0
+pandas>=2.2.0
+openpyxl>=3.1.2
+python-dotenv>=1.0.1
+SpeechRecognition>=3.10.1
+youtube-transcript-api>=0.6.2
+gTTS>=2.5.1
